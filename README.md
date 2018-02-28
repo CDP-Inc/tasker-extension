@@ -3,3 +3,7 @@ Tasker was a project developed by CDP, Inc. for use with TFS 2010 because teams 
 
 ***Like the documentation, this Softare is not complete*** 
 
+# Building the extension
+Some simple npm scripts were created for the build process.  
+* In order to compile the typescript files simply run `npm run-script compile`.
+* To build the vsix output to upload to the extension gallery run `npm run-script deploy`.
