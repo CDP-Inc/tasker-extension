@@ -1,0 +1,24 @@
+{
+  "name": "tasker-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@types/jquery": "^3.3.0",
+    "@types/q": "^1.0.7",
+    "require": "^2.4.20",
+    "vss-web-extension-sdk": "^5.127.0"
+  },
+  "devDependencies": {
+    "tfx-cli": "^0.5.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc -p \"tsconfig.json\"",
+    "package": "tfx extension create --rev-version",
+    "serve": "serve --addr 127.0.0.1 --port 8080 --path \"./static/\" --cache \"60 minutes\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,237 @@
+{
+    "workItemTypes": ["User Story", "Bug", "Issue"],
+    "teams": [
+      {
+        "name": "Archaeology",
+        "projects": [ "SPIRIT" ],
+        "defaultTasks": [1, 2, 9, 10, 13, 21, 7],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Avengers",
+        "projects": [ "MPSC" ],
+        "defaultTasks": [24,25,26],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Elite",
+        "projects": [ "CMS" ],
+        "defaultTasks": [ 1,6,8,9,10,11,12,13 ],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Fusion",
+        "projects": [ "BI" ],
+        "defaultTasks": [ 1, 14, 15, 16, 17, 18, 19, 20 ],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Panda",
+        "projects": [ "ENV" ],
+        "defaultTasks": [ 1,9,10,21,22,23 ],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Tesla",
+        "projects": [ "EBT", "CORE" ],
+        "defaultTasks": [ 1, 2 ],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+        
+      },
+      {
+        "name": "SPIRIT Web Team A",
+        "projects": ["SPIRIT Web"],
+        "defaultTasks": [1,2,13],
+        "supportedTasks":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]
+      },
+      {
+        "name": "Super Duper Bug-Free Code Team",
+        "projects": ["Super Duper Bug-Free Code"],
+        "defaultTasks": [1,2,13,23],
+        "supportedTasks":[1,2,4,5,6,7,8,9,10,11,12,13,14,15,20,23,24,25,26,27]
+      }
+    ],
+    "tasks": [
+        {
+          "id": 1,
+          "name": ".NET Development",
+          "hasReview": true,
+          "iconClass": "fa fa-file-code"
+        },
+        {
+          "id": 2,
+          "name": "Developer Test",
+          "hasReview": false,
+          "iconClass": "fa fa-chain-broken"
+        },
+        {
+          "id": 3,
+          "name": "Services",
+          "hasReview": false,
+          "iconClass": "fa fa-cogs"
+        },
+        {
+          "id": 4,
+          "name": "Reports",
+          "hasReview": false,
+          "iconClass": "fa fa-clipboard"
+        },
+        {
+          "id": 5,
+          "name": "Data Entry",
+          "hasReview": false,
+          "iconClass": "fa fa-keyboard-o"
+        },
+        {
+          "id": 6,
+          "name": "Test / Script",
+          "hasReview": false,
+          "iconClass": "fa fa-check-square-o"
+        },
+        {
+          "id": 7,
+          "name": "Database Objects",
+          "hasReview": true,
+          "iconClass": "fa fa-database"
+        },
+        {
+          "id": 8,
+          "name": "Stored Procedures",
+          "hasReview": true,
+          "iconClass": "fa fa-random"
+        },
+        {
+          "id": 9,
+          "name": "QA Prep",
+          "hasReview": false
+        },
+        {
+          "id": 10,
+          "name": "QA Execute",
+          "hasReview": false
+        },
+        {
+          "id": 11,
+          "name": "QA Regression",
+          "hasReview": false
+        },
+        {
+          "id": 12,
+          "name": "Documentation",
+          "hasReview": true,
+          "iconClass": "fa fa-file-pdf-o"
+        },
+        {
+          "id": 13,
+          "name": "Merge / Story Cleanup",
+          "hasReview": false,
+          "iconClass": "fa fa-code-fork"
+        },
+        {
+          "id": 14,
+          "name": "User Interface",
+          "hasReview": false,
+          "iconClass": "fa fa-window-restore"
+        },
+        {
+          "id": 15,
+          "name": "Research",
+          "hasReview": false,
+          "iconClass": "fa fa-binoculars"
+        },
+        {
+          "id": 16,
+          "name": "Raw",
+          "hasReview": true
+        },
+        {
+          "id": 17,
+          "name": "Integration",
+          "hasReview": true
+        },
+        {
+          "id": 18,
+          "name": "Star Schema",
+          "hasReview": true
+        },
+        {
+          "id": 19,
+          "name": "Cube",
+          "hasReview": true,
+          "iconClass": "fa fa-cube"
+        },
+        {
+          "id": 20,
+          "name": "Unit Testing",
+          "hasReview": false,
+          "iconClass": "fa fa-compress"
+        },
+        {
+          "id": 21,
+          "name": "Database Dev",
+          "hasReview": true,
+          "iconClass": "fa fa-database"
+        },
+        {
+          "id": 22,
+          "name": "Mobile Dev",
+          "hasReview": true,
+          "iconClass": "fa fa-mobile"
+        },
+        {
+          "id": 23,
+          "name": "WTF (Functionality)",
+          "hasReview": false,
+          "iconClass": "fa fa-bullseye"
+        },
+        {
+          "id": 24,
+          "name": "Implementation",
+          "hasReview": false
+        },
+        {
+          "id": 25,
+          "name": ".NET Fix",
+          "hasReview": true,
+          "iconClass": "fa fa-link"
+        },
+        {
+          "id": 26,
+          "name": ".NET Test",
+          "hasReview": false,
+          "iconClass": "fa fa-chain-broken"
+        },
+        {
+          "id": 27,
+          "name": "Merge / Build",
+          "hasReview": false,
+          "iconClass": "fa fa-code-fork"
+        },
+        {
+          "id": 28,
+          "name": "QA Coverage Review",
+          "hasReview": false,
+          "iconClass": "fa fa-view"
+        },
+        {
+          "id": 29,
+          "name": "QA Ready",
+          "hasReview": false
+        },
+        {
+          "id": 30,
+          "name": "SSIS Package Fix",
+          "hasReview": true
+        },
+        {
+          "id": 31,
+          "name": "SSIS Package Test",
+          "hasReview": false
+        },
+        {
+          "id": 32,
+          "name": "SSIS Package Merge",
+          "hasReview": false
+        }	
+      ]
+  }

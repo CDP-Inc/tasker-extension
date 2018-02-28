@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tasker</title>
+    <script src="../lib/VSS.SDK.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="css/site.css" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Require JS eliminates need for explicit reference to app.js -->
+</head>
+<body>
+        
+    <script type="text/javascript">
+    
+        // Initialize the VSS sdk
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            configureModuleLoader: true
+        });
+    </script>
+    
+    <div class="container">
+        
+        <div class="header">
+            <img class="site-brand" src="images/logo.png">
+            <h1>Tasker</h1>
+        </div>
+
+
+        <!-- Content -->
+        <form>  
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="breadcrumb">Adding Tasks for&nbsp;
+                        <span id="contextAccount">Coming Soon</span>&nbsp;>&nbsp;
+                        <span id="contextProject">Coming Soon</span>&nbsp;>&nbsp;
+                        <span id="contextTeam">Coming Soon</span> 
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="outputMessages"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-label" for="workItemSelector">Work Items(s):</label>
+                        <input type="text" id="workItemSelector" class="form-control" placeholder="101762, 201332" >
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div id="selectedItems" class="row">
+                        <!-- Work Items Selector Items Get Inserted Here -->
+                    </div>
+                </div>
+            </div>
+            <hr class="separator"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="section-header">Assignable Tasks</h3>
+                    <p class="text-muted "><em>Add by double-click or dragging to assigned</em></p>
+                
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label" for="customTask">Add Custom Task:</label>
+                            <input type="text" id="customTask" class="form-control" placeholder="A new task title..." >
+                        </div>
+                    </div>
+                    <div id="assignableTasks" class="row task-pane">
+                        <!-- Unassigned Tasks Get Inserted Here -->
+                    </div>
+                    <div class="row">
+                        <div id="unAssignedTasksDropTarget" class="col-md-12 drop-target text-center hidden">
+                            <p>Drop Tasks Here To Remove</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="section-header">Assigned Tasks</h3>
+                    <p class="text-muted "><em>Remove by double-click or dragging to assignable</em></p>
+                    <div id="assignedTasks" class="row task-pane">
+                            <!-- Assigned Tasks Get Inserted Here -->
+                    </div>
+                    <div class="row">
+                        <div id="assignedTasksDropTarget" class="col-md-12 drop-target text-center hidden">
+                            <p>Drop Tasks Here To Remove</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="separator"/>
+            <div class="text-right">
+                <button class="btn btn-default" type="button">Update Task</button>
+            </div>
+        </form>
+        <!-- End Content -->
+
+    </div>
+    
+    <script type="text/javascript">
+        VSS.require(["dist/app"], function(app) {
+            // Loading succeeded
+            VSS.notifyLoadSucceeded();       
+        });
+    </script>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</body>
+</html>

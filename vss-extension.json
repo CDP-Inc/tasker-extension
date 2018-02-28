@@ -1,0 +1,49 @@
+{
+    "manifestVersion": 1,
+    "id": "vsts-tfs-tasker",
+    "version": "0.1.92",
+    "name": "Tasker",
+    "description": "Bulk add tasks to a User Story or Bug.",
+    "publisher": "cdpinc",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+            }
+        ],
+    "icons": {
+        "default": "static/images/logo.png"
+     },
+    "contributions": [
+        {
+            "id": "TaskerExtension",
+            "type": "ms.vss-web.hub",
+            "description": "Adds a Tasker hub to the Work hub group.",
+            "targets": [
+                "ms.vss-work-web.work-hub-group"
+                ],
+            "properties": {
+                "name": "Tasker",
+                "order": 99,
+                "uri": "static/index.html"
+            }
+        }
+    ],
+    "scopes": [
+        "vso.work"
+    ],
+    "files": [
+        {
+            "path": "dist",
+            "addressable": true
+        },
+        {
+            "path": "static",
+            "addressable": true
+        },
+        {
+            "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "lib"
+        }
+    ]
+}
