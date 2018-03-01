@@ -15,6 +15,13 @@ hr.separator{
     font-size: 1.25em;
 }
 
+.dragover-indicator{
+    background-color: #b38f2e;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15em;
+}
+
 .header{
     position: relative;
     padding-bottom: 3px;

@@ -116,6 +116,19 @@ export class App{
 
     }
 
+    public toggleDropIndicators(src:string){
+        if(!src){
+            $("#assignedTasksDropTarget").addClass("hidden");
+            $("#unAssignedTasksDropTarget").addClass("hidden");
+        }
+        else if(src === "assignableTasks"){
+            $("#assignedTasksDropTarget").removeClass("hidden");
+        }
+        else{
+            $("#unAssignedTasksDropTarget").removeClass("hidden");
+        }
+    }
+
 }
 
 /* Bootstrapp the app*/
@@ -142,7 +155,35 @@ $(function(){
             });
 
         });
-        
+    });
+
+    $("drop-target")
+        .bind("dragleave", (e:any) =>{
+            $(e.target).removeClass("dragover-indicator");
+        })
+        .bind("dragover", (e:any) => {
+            e.preventDefault();
+            var dataTrsf = e.originalEvent.dataTransfer;
+            var d = JSON.parse(dataTrsf.getData("text/plain"));
+            if(d.source !== e.target.id){
+                $(e.target).addClass("dragover-indicator");
+            }
+        })
+        .bind("drop", (e:any) => {
+
+        });
+
+
+    $("body").on("dragstart",".wit-assignable", function(e:any){
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        console.log(`drag start ${JSON.stringify(e)}`);
+        var parentId = e.target.parentElement.id;        
+
+        // Set the transfer data for the drag.        
+        var data = { "element":e.target.id, "source":parentId }
+        e.dataTransfer.setData("text/plain", JSON.stringify(data));
+
+        a.toggleDropIndicators(parentId);
     });
 
 });

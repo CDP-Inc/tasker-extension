@@ -24,12 +24,35 @@ export class AssignableTask{
     public toHtmlString() : string{
         
         this.outputHtml  = "<div class=\"col-md-6 text-center\">";
-        this.outputHtml += `    <div class=\"wit wit-assignable text-left\" draggable=\"true\">`;
+        this.outputHtml += `    <div data-taskId=\"${this.id || "custom"}\" class=\"wit wit-assignable text-left\" draggable=\"true\">`;
         this.outputHtml += `       <span class=\"wit-title\"><i class=\"${this.iconClass}\"/>&nbsp;${this.name}</span>`;
         this.outputHtml += "    </div>";    
         this.outputHtml += "</div>";   
         
         // Return the object.
         return this.outputHtml;
+    }
+
+    public toElement(): HTMLDivElement{
+        let el = new HTMLDivElement();
+        el.setAttribute("class", "col-md-6 text-center");
+        
+        let inEl = new HTMLDivElement();
+        inEl.setAttribute("class", "wit wit-assignable text-left");
+        inEl.setAttribute("data-taskId", this.id.toString() || "custom");
+        inEl.setAttribute("draggable", "true");
+
+        let span = new HTMLSpanElement();
+        span.setAttribute("class", "wit-title");
+
+        let i = new HTMLLIElement();
+        i.setAttribute("class", this.iconClass);
+        span.appendChild(i);
+        span.textContent = "&nbsp;" + this.name;
+
+        inEl.appendChild(i);
+        el.appendChild(inEl);
+
+        return el;
     }
 }
