@@ -73,14 +73,14 @@ export class App{
                 // Some funky typescript stuff going on here (have to convert AssignableTask to AssignableTask 
                 // because it doesn't know it's type here at runtime.
                 let assignableTask:AssignableTask = new AssignableTask(this.teamservice.assignableTasks[ati]);
-                $("#assignableTasks").append(assignableTask.toHtmlString());
+                $("#assignableTasks").append(assignableTask.toElement());
             }
 
             for(var xti = 0; xti < this.teamservice.assignedTasks.length; xti++){
                 // Some funky typescript stuff going on here (have to convert AssignableTask to AssignableTask 
                 // because it doesn't know it's type here at runtime.
-                let assignedTask:AssignableTask = new AssignableTask(this.teamservice.assignableTasks[xti]);
-                $("#assignedTasks").append(assignedTask.toHtmlString());
+                let assignedTask:AssignableTask = new AssignableTask(this.teamservice.assignedTasks[xti]);
+                $("#assignedTasks").append(assignedTask.toElement());
             }
         });
 
@@ -115,24 +115,10 @@ export class App{
         });
 
     }
-
-    public toggleDropIndicators(src:string){
-        if(!src){
-            $("#assignedTasksDropTarget").addClass("hidden");
-            $("#unAssignedTasksDropTarget").addClass("hidden");
-        }
-        else if(src === "assignableTasks"){
-            $("#assignedTasksDropTarget").removeClass("hidden");
-        }
-        else{
-            $("#unAssignedTasksDropTarget").removeClass("hidden");
-        }
-    }
-
 }
 
 /* Bootstrapp the app*/
-$(function(){
+$(document).ready(function(){
     var a = new App();
 
     $("#workItemSelector").bind("blur", function(e){
@@ -173,19 +159,5 @@ $(function(){
 
         });
 
-
-    $("body").on("dragstart",".wit-assignable", function(e:any){
-        e.dataTransfer = e.originalEvent.dataTransfer;
-        console.log(`drag start ${JSON.stringify(e)}`);
-        var parentId = e.target.parentElement.id;        
-
-        // Set the transfer data for the drag.        
-        var data = { "element":e.target.id, "source":parentId }
-        e.dataTransfer.setData("text/plain", JSON.stringify(data));
-
-        a.toggleDropIndicators(parentId);
-    });
-
 });
-
 

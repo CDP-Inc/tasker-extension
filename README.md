@@ -12,3 +12,41 @@ Some simple npm scripts were created for the build process.
 
 # Publishing the extension
 An extension must be published in order to use it in a VSTS or TFS environment.  Instructions to publish an extension can be found at [Microsoft's Documentation Site](https://docs.microsoft.com/en-us/vsts/extend/publish/overview)
+
+# Configuring the extension
+Inside the static folder is a data folder.  This folder contains the [taskList.json](static/data/taskList.json) file.  The structure of this file is as follows:
+
+## `tasks`
+Tasks represent the different tasks that can be added in batch from the Tasker.  
+
+### `id`
+An identifier for the task, this is a number.  It is referenced by the defaultTasks and supportedTasks properties of the team node objects.  This provides a direct relationship between these tasks and the various teams and projects.
+
+### `name`
+The name of the task, this will be used as the title of the task when the task batch is submitted.
+
+### `hasReview`
+A simple boolean value that indicates whether or not a review task with the same **Name** is added when this task is added.  For example, a task: *Make Donuts* with `"hasReview": true` would add not only the *Make Donuts* task, but also a *Make Donuts Review* task.
+
+### `iconClass`
+Icon class is the css class for icons that can be applied to the task visually.  This can be any FontAwesome 4.7 or Glyphicon (Bootstrap 4.3) icon class.
+
+## `teams`
+The teams node represents the different teams within the organization.  Each team and project that is using tasker within an organization should have an entry in this node.
+
+### `name`
+Each team has a name, this is the same as the team name specified in VSTS or TFS.
+
+### `projects`
+The projects array represents the different projects for which this team is responsible.  These projects should match the names in VSTS and TFS.
+
+*Important Note* Tasker checks for a match on team and project, if it doesn't find one, then it will not function.  It is important that both of these values are set correctly.
+
+### `defaultTasks`
+An array of `tasks.id` values that correspond with the tasks that will be pre-selected as **assigned** when the tasker is loaded for the given team.
+
+### `supportedTasks`
+An array of `tasks.id` values that correspond with the tasks that made available as **assignable** when the tasker is loaded for the given team.
+
+## `workItemTypes`
+This represents the work item types that are recognized as valid parents for the tasker.  Currently this is limited to "User Story", "Bug", and/or "Issue".
