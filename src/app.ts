@@ -143,21 +143,26 @@ $(document).ready(function(){
         });
     });
 
-    $("drop-target")
+    $(".drop-target")
         .bind("dragleave", (e:any) =>{
             $(e.target).removeClass("dragover-indicator");
         })
         .bind("dragover", (e:any) => {
             e.preventDefault();
-            var dataTrsf = e.originalEvent.dataTransfer;
-            var d = JSON.parse(dataTrsf.getData("text/plain"));
-            if(d.source !== e.target.id){
-                $(e.target).addClass("dragover-indicator");
+
+            console.log(`Event Target: ${e.target.id}, Original Event Target: ${e.originalEvent.target.id}, currentTarget: ${e.currentTarget.id}, original current target ${e.originalEvent.currentTarget.id}`)
+
+            var dataTrsf:any = $(e.originalEvent.target).attr("data-transfer");
+            console.log(`data transfer: ${dataTrsf}`)
+            var d = JSON.parse(dataTrsf);
+            if(d.source !== e.currentTarget.id){
+                $(e.currentTarget).addClass("dragover-indicator");
             }
         })
         .bind("drop", (e:any) => {
-
+            e.preventDefault();
+            var dataTrsf = $(e.currentTarget).attr("data-transfer");
+            console.log(`data transfer: ${dataTrsf}`)
         });
-
 });
 

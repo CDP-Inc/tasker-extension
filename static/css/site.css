@@ -22,6 +22,21 @@ hr.separator{
     font-size: 1.15em;
 }
 
+.drop-target{
+    height: 200px;
+    padding-top: 85px;
+    background-color: #ccc;
+    color: #999;
+    border: #fff 1px solid;
+    border-spacing: 2;
+}
+
+.drop-target.drop-target-active{
+    background-color: #6f9cc4;
+    color: #fff;
+    font-weight: 800;
+}
+
 .header{
     position: relative;
     padding-bottom: 3px;
