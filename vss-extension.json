@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "vsts-tfs-tasker",
-    "version": "0.1.140",
+    "version": "0.1.156",
     "name": "Tasker",
     "description": "Bulk add tasks to a User Story or Bug.",
     "publisher": "cdpinc",

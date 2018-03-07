@@ -1,9 +1,10 @@
 import { generateUID } from "VSS/Utils/String";
+import { App } from "../app";
 
 /** 
  * @description Represents a task that can be assigned to a work item.
 */
-export class AssignableTask{
+export class AssignableTask {
 
     public id : number;
     public name : string;
@@ -11,7 +12,7 @@ export class AssignableTask{
     private iconClass: string;
     private element: HTMLDivElement;
 
-    constructor(value?:any){
+    constructor(private app:App, value?:any){
         if(value !== null){
             this.id = value.id;
             this.name = value.name;
@@ -46,12 +47,14 @@ export class AssignableTask{
         
         let inEl = document.createElement("div");
         inEl.setAttribute("class", "wit wit-assignable text-left");
-        inEl.setAttribute("data-taskId", this.id.toString() || "custom");
+        inEl.setAttribute("data-taskId", this.id.toString() || "custom");        
+        inEl.setAttribute("data-hasReview", this.hasReview ? "true":"false");
+        inEl.setAttribute("data-taskName", this.name);
         inEl.setAttribute("draggable", "true");
 
         let span = document.createElement("span");
         span.setAttribute("class", "wit-title");
-        span.innerHTML =  `<i class=\"${this.iconClass}\" />&nbsp;${this.name};`
+        span.innerHTML =  `<i class=\"${this.iconClass}\" />&nbsp;${this.name}`;
 
         inEl.appendChild(span);
         el.appendChild(inEl);
@@ -59,37 +62,35 @@ export class AssignableTask{
         return el;
     }
 
-    private onDblClick = (ev: Event) => {
-        this.prepareTransfer(ev);
+    private onDblClick = (ev: any) => {
+        this.app.prepareTransfer(ev);
     }
 
-    private onDragStart = (ev: Event) => {
-        this.prepareTransfer(ev, true);
+    private onDragStart = (ev: any) => {
+        this.app.prepareTransfer(ev, true);
     }
 
-    private prepareTransfer(event: Event, toggle: boolean = false){
-        let parentId = (event.currentTarget as HTMLElement).parentElement.id;
-        let target = (event.currentTarget as HTMLElement);
-
-        // append the information to the object.
-        let data: any = { "target": target.id, "source": parentId };
-        target.setAttribute("data-transfer", JSON.stringify(data));
+    public static CreateReviewTask(taskName:string, assocTaskId: string) : HTMLDivElement{
+        let el = document.createElement("div");
+        el.id = `task-${generateUID()}`
+        el.setAttribute("class", "col-md-6 text-center");
         
-        if(toggle){
-            if(parentId === "assignedTasks"){
-                $("#unAssignedTasksDropTarget").removeClass("hidden");
-                $("#assignedTasksDropTarget").addClass("hidden");
-            }
-            else if (parentId === "assignableTasks"){
-                $("#unAssignedTasksDropTarget").addClass("hidden");
-                $("#assignedTasksDropTarget").removeClass("hidden");
-            }
-            else{
-                $("#unAssignedTasksDropTarget").addClass("hidden");
-                $("#assignedTasksDropTarget").addClass("hidden");
-            }
-        }
+        let inEl = document.createElement("div");
+        inEl.setAttribute("class", "wit wit-assignable text-left");
+        inEl.setAttribute("draggable", "true");
+        inEl.setAttribute("data-taskName", taskName + " Review");
+        inEl.setAttribute("data-reviewFor", assocTaskId);
+        inEl.setAttribute("data-taskId", "review")
+        inEl.setAttribute("data-hasReview", "false");
 
-        console.log("Drag in process: data-transfer=|" + JSON.stringify(data) + "|");
+        let span = document.createElement("span");
+        span.setAttribute("class", "wit-title");
+        span.innerHTML =  `<i class=\"fa fa-pencil-square-o\" />&nbsp;${taskName} Review;`
+
+        inEl.appendChild(span);
+        el.appendChild(inEl);
+
+        return el;
     }
+
 }

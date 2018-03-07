@@ -72,14 +72,14 @@ export class App{
             for(var ati = 0; ati < this.teamservice.assignableTasks.length; ati++){
                 // Some funky typescript stuff going on here (have to convert AssignableTask to AssignableTask 
                 // because it doesn't know it's type here at runtime.
-                let assignableTask:AssignableTask = new AssignableTask(this.teamservice.assignableTasks[ati]);
+                let assignableTask:AssignableTask = new AssignableTask(this, this.teamservice.assignableTasks[ati]);
                 $("#assignableTasks").append(assignableTask.toElement());
             }
 
             for(var xti = 0; xti < this.teamservice.assignedTasks.length; xti++){
                 // Some funky typescript stuff going on here (have to convert AssignableTask to AssignableTask 
                 // because it doesn't know it's type here at runtime.
-                let assignedTask:AssignableTask = new AssignableTask(this.teamservice.assignedTasks[xti]);
+                let assignedTask:AssignableTask = new AssignableTask(this, this.teamservice.assignedTasks[xti]);
                 $("#assignedTasks").append(assignedTask.toElement());
             }
         });
@@ -115,6 +115,66 @@ export class App{
         });
 
     }
+
+    public prepareTransfer(event: any, toggle: boolean = false){
+        // Check the standard zones first.
+        let parentId = event.target.parentElement.id;
+        let target = event.target;
+
+        // Sometimes it comes in in the "currentTarget" field instead.
+        if(!target.id){
+            parentId = event.currentTarget.parentElement.id;
+            target = event.currentTarget;
+        }
+
+        // append the information to the object.
+        let data: any = { "target": target.id, "source": parentId };
+        
+        // Set a custom attribute and the event transfer state.
+        target.setAttribute("data-transfer", JSON.stringify(data));
+        event.dataTransfer.setData("application/json", JSON.stringify(data))
+
+        if(toggle){
+            if(parentId === "assignedTasks"){
+                $("#unAssignedTasksDropTarget").removeClass("hidden");
+                $("#assignedTasksDropTarget").addClass("hidden");
+            }
+            else if (parentId === "assignableTasks"){
+                $("#unAssignedTasksDropTarget").addClass("hidden");
+                $("#assignedTasksDropTarget").removeClass("hidden");
+            }
+            else{
+                $("#unAssignedTasksDropTarget").addClass("hidden");
+                $("#assignedTasksDropTarget").addClass("hidden");
+            }
+        }
+
+        console.log("Drag in process: data-transfer=|" + JSON.stringify(data) + "|");
+    }
+
+    public moveTask(taskElement: JQuery<HTMLElement>, destination: JQuery<HTMLElement>){
+        let el = $(taskElement).detach();
+        $(destination).append(el);
+
+        let taskId = $(el).attr("data-taskId");
+        let hasReview = ($(el).attr("data-hasReview").toLowerCase() == "true")? true:false;
+        let taskName = $(el).attr("data-taskName");
+
+        console.log(`The task ${taskName} which ${hasReview? "has review":"does not have review"} was moved to ${destination.attr("id")}`);
+
+        if(taskName !== "" && hasReview){
+            if($(destination).attr("id") === "assignedTasks"){
+                console.log("Creating review task.")
+                let reviewTask = AssignableTask.CreateReviewTask(taskName, taskId);
+                $(destination).append(reviewTask);
+            }
+            else{
+                console.log("Removing any associated review task");
+                let reviewTask =  $("div[data-reviewFor='" + taskId + "']");
+                reviewTask.remove();
+            }
+        }
+    }
 }
 
 /* Bootstrapp the app*/
@@ -147,22 +207,50 @@ $(document).ready(function(){
         .bind("dragleave", (e:any) =>{
             $(e.target).removeClass("dragover-indicator");
         })
-        .bind("dragover", (e:any) => {
+        .bind("dragover", (e:any) =>{
             e.preventDefault();
-
-            console.log(`Event Target: ${e.target.id}, Original Event Target: ${e.originalEvent.target.id}, currentTarget: ${e.currentTarget.id}, original current target ${e.originalEvent.currentTarget.id}`)
-
-            var dataTrsf:any = $(e.originalEvent.target).attr("data-transfer");
-            console.log(`data transfer: ${dataTrsf}`)
-            var d = JSON.parse(dataTrsf);
-            if(d.source !== e.currentTarget.id){
-                $(e.currentTarget).addClass("dragover-indicator");
-            }
+        })
+        .bind("dragenter", (e:any) => {
+            e.preventDefault();
         })
         .bind("drop", (e:any) => {
             e.preventDefault();
-            var dataTrsf = $(e.currentTarget).attr("data-transfer");
+            e.dataTransfer = e.originalEvent.dataTransfer;
+            
+            // Get the data string from the transfer object.
+            let dataTrsf  = e.dataTransfer.getData("application/json");
             console.log(`data transfer: ${dataTrsf}`)
+
+            // Parse it.
+            var d = JSON.parse(dataTrsf);
+
+            // Get the components
+            let dataTarget = $("#" + d.target);
+            let dataSource = $("#" + d.source);
+
+            // Get the dropzone 
+            let dd = $(e.target || e.currentTarget);
+            
+            // Define and determine where it goes from here.
+            let dataDestination : JQuery<HTMLElement> = null;
+            if(dd.attr("id") === "unAssignedTasksDropTarget"){
+                dataDestination = $("#assignableTasks")
+            }
+            else if(dd.attr("id") === "assignedTasksDropTarget") {
+                dataDestination = $("#assignedTasks");
+            }
+
+            // Now, if everythings good, then move it.
+            if(dataDestination !== null){
+                console.log(`Moving ${dataTarget.attr("id")} from ${dataSource.attr("id")} to ${dataDestination.attr("id")}`);
+                a.moveTask(dataTarget, dataDestination);
+            }
+            else{
+                console.log(`Destination could not be determined.`);
+            }
+
+            // Now hide the drop target...
+            dd.addClass("hidden");
         });
 });
 
