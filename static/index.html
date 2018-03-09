@@ -59,17 +59,24 @@
                 </div>
             </div>
             <hr class="separator"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-9">
+                            <label class="form-label" for="customTask">Custom Task:</label>
+                            <div class="input-group">
+                                <input type="text" id="customTask" class="form-control" placeholder="A new task title..."/>&nbsp;
+                                <span class="input-group-btn">
+                                    <button id="addCustomTask" class="btn btn-default" type="button">Add Task</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <hr class="separator"/>
             <div class="row">
                 <div class="col-md-6">
                     <h3 class="section-header">Assignable Tasks</h3>
                     <p class="text-muted "><em>Add by double-click or dragging to assigned</em></p>
-                
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="form-label" for="customTask">Add Custom Task:</label>
-                            <input type="text" id="customTask" class="form-control" placeholder="A new task title..." >
-                        </div>
-                    </div>
                     <div id="assignableTasks" class="row task-pane">
                         <!-- Unassigned Tasks Get Inserted Here -->
                     </div>
@@ -94,7 +101,7 @@
             </div>
             <hr class="separator"/>
             <div class="text-right">
-                <button class="btn btn-default" type="button">Update Task</button>
+                <button id="updateTask" class="btn btn-primary" type="button">Update Task</button>
             </div>
         </form>
         <!-- End Content -->

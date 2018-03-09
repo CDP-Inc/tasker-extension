@@ -48,7 +48,7 @@ export class AssignableTask {
         
         let inEl = document.createElement("div");
         inEl.setAttribute("class", "wit wit-assignable text-left");
-        inEl.setAttribute("data-taskId", this.id.toString() || "custom");        
+        inEl.setAttribute("data-taskId", (this.id? this.id.toString() : "custom"));        
         inEl.setAttribute("data-hasReview", this.hasReview ? "true":"false");
         inEl.setAttribute("data-taskName", this.name);
         inEl.setAttribute("draggable", "true");

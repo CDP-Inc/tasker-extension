@@ -219,6 +219,16 @@ $(document).ready(function(){
         });
     });
 
+    $("#addCustomTask").click((e:any) => {
+        let t = new AssignableTask(this, {
+            name: `${$("#customTask").val()}`,
+            hasReview: false,
+            iconClass: "fa fa-cloud"
+        });
+
+        $("#assignedTasks").append(t.toElement());
+    });
+
     $(".drop-target")
         .bind("dragleave", (e:any) =>{
             $(e.target).removeClass("dragover-indicator");
