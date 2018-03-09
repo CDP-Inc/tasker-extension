@@ -23,6 +23,7 @@ export class AssignableTask {
         this.element = this.initalize();
         this.element.addEventListener("dragstart", this.onDragStart);
         this.element.addEventListener("dblclick", this.onDblClick);
+        this.element.addEventListener("dragend", this.onDragEnd);
     }
 
     /** 
@@ -63,11 +64,16 @@ export class AssignableTask {
     }
 
     private onDblClick = (ev: any) => {
-        this.app.prepareTransfer(ev);
+        // Find the current target.
+        this.app.directTransfer(this.element.id, this.element.parentElement.id);
     }
 
     private onDragStart = (ev: any) => {
         this.app.prepareTransfer(ev, true);
+    }
+
+    private onDragEnd = (ev:any) => { 
+        this.app.finishDrag(ev);
     }
 
     public static CreateReviewTask(taskName:string, assocTaskId: string) : HTMLDivElement{

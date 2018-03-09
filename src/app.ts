@@ -152,12 +152,28 @@ export class App{
         console.log("Drag in process: data-transfer=|" + JSON.stringify(data) + "|");
     }
 
+    public directTransfer(elementId: string, currentParentId: string){
+        if(currentParentId === "assignableTasks"){
+            // moving to assigned
+            this.moveTask($(`#${elementId}`), $("#assignedTasks"));
+        }
+        else{
+            // moving to assignable
+            this.moveTask($(`#${elementId}`), $("#assignableTasks"));
+        }
+    }
+
+    public finishDrag(e:any){
+        $("#unAssignedTasksDropTarget").addClass("hidden");
+        $("#assignedTasksDropTarget").addClass("hidden");
+    }
+
     public moveTask(taskElement: JQuery<HTMLElement>, destination: JQuery<HTMLElement>){
         let el = $(taskElement).detach();
         $(destination).append(el);
 
         let taskId = $(el).attr("data-taskId");
-        let hasReview = ($(el).attr("data-hasReview").toLowerCase() == "true")? true:false;
+        let hasReview = ($(el).attr("data-hasReview").toLowerCase() === "true")? true:false;
         let taskName = $(el).attr("data-taskName");
 
         console.log(`The task ${taskName} which ${hasReview? "has review":"does not have review"} was moved to ${destination.attr("id")}`);
