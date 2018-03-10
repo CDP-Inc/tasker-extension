@@ -11,6 +11,10 @@ hr.separator{
     margin-bottom: 10px;
 }
 
+.btn-bootstrap{
+    height: initial!important;
+}
+
 .breadcrumb{
     font-size: 1.25em;
 }

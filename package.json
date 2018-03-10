@@ -14,7 +14,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc -p \"tsconfig.json\"",
-    "package": "tsc -p \"tsconfig.json\" && tfx extension create --rev-version",
+    "package": "tsc -p \"tsconfig.json\" && tfx extension create",
+    "version-package": "tsc -p \"tsconfig.json\" && tfx extension create --rev-version",
     "serve": "serve --addr 127.0.0.1 --port 8080 --path \"./static/\" --cache \"60 minutes\""
   },
   "keywords": [],

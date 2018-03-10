@@ -42,9 +42,10 @@ export class AssignableTask {
     }
 
     private initalize(): HTMLDivElement{
+        var guid = generateUID();
         let el = document.createElement("div");
-        el.id = `task-${generateUID()}`
         el.setAttribute("class", "col-md-6 text-center");
+        el.id = `task-${guid}`;
         
         let inEl = document.createElement("div");
         inEl.setAttribute("class", "wit wit-assignable text-left");
@@ -77,10 +78,11 @@ export class AssignableTask {
     }
 
     public static CreateReviewTask(taskName:string, assocTaskId: string) : HTMLDivElement{
-        let el = document.createElement("div");
-        el.id = `task-${generateUID()}`
+        var guid = generateUID();
+        let el = document.createElement("div");        
         el.setAttribute("class", "col-md-6 text-center");
-        
+        el.id = `task-${guid}`;
+
         let inEl = document.createElement("div");
         inEl.setAttribute("class", "wit wit-assignable text-left");
         inEl.setAttribute("draggable", "true");
@@ -91,7 +93,7 @@ export class AssignableTask {
 
         let span = document.createElement("span");
         span.setAttribute("class", "wit-title");
-        span.innerHTML =  `<i class=\"fa fa-pencil-square-o\" />&nbsp;${taskName} Review;`
+        span.innerHTML =  `<i class=\"fa fa-pencil-square-o\" />&nbsp;${taskName} Review`;
 
         inEl.appendChild(span);
         el.appendChild(inEl);

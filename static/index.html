@@ -41,11 +41,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div id="outputMessages"></div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="form-label" for="workItemSelector">Work Items(s):</label>
@@ -60,15 +55,13 @@
             </div>
             <hr class="separator"/>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group col-md-9">
-                            <label class="form-label" for="customTask">Custom Task:</label>
-                            <div class="input-group">
-                                <input type="text" id="customTask" class="form-control" placeholder="A new task title..."/>&nbsp;
-                                <span class="input-group-btn">
-                                    <button id="addCustomTask" class="btn btn-default" type="button">Add Task</button>
-                                </span>
-                            </div>
+                    <div class="form-group col-md-9">
+                        <label class="form-label" for="customTask">Custom Task:</label>
+                        <div class="input-group">
+                            <input type="text" id="customTask" class="form-control" placeholder="A new task title..."/>&nbsp;
+                            <span class="input-group-btn">
+                                <button id="addCustomTask" class="btn btn-bootstrap btn-default" type="button">Add Task</button>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -100,8 +93,13 @@
                 </div>
             </div>
             <hr class="separator"/>
-            <div class="text-right">
-                <button id="updateTask" class="btn btn-primary" type="button">Update Task</button>
+            <div class="row">
+                <div class="col-md-10">
+                    <div id="outputMessages"></div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button id="updateTask" class="btn btn-bootstrap btn-primary" type="button">Update Task</button>
+                </div>
             </div>
         </form>
         <!-- End Content -->

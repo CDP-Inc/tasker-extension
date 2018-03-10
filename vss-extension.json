@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "vsts-tfs-tasker",
-    "version": "0.1.161",
+    "version": "1.0.2",
     "name": "Tasker",
     "description": "Bulk add tasks to a User Story or Bug.",
     "publisher": "cdpinc",
@@ -29,7 +29,7 @@
         }
     ],
     "scopes": [
-        "vso.work"
+        "vso.work_write"
     ],
     "files": [
         {

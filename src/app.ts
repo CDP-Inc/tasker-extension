@@ -4,6 +4,7 @@ import { TaskerConfig } from "./models/tasker-config.model";
 import { TaskerTeam } from "./models/tasker-team.model";
 import { AssignableTask } from "./models/assignable-task.component";
 import { WorkItem } from "TFS/WorkItemTracking/Contracts";
+import { createElement } from "react";
 
 export class App{
     private config: TaskerConfig;
@@ -56,10 +57,12 @@ export class App{
                     
                         if(o.defaultTasks.indexOf(obj.id) > -1){
                             // This is a default task for this team.
+                            console.log(`Adding assigned task ${JSON.stringify(obj)}`)
                             this.teamservice.assignedTasks.push(obj);
                         }
                         else if (o.supportedTasks.indexOf(obj.id) > -1){
                             // This is an assignable task.
+                            console.log(`Adding assigned task ${JSON.stringify(obj)}`)
                             this.teamservice.assignableTasks.push(obj);
                         }
                         // else it's neither so we ignore.                        
@@ -172,9 +175,11 @@ export class App{
         let el = $(taskElement).detach();
         $(destination).append(el);
 
-        let taskId = $(el).attr("data-taskId");
-        let hasReview = ($(el).attr("data-hasReview").toLowerCase() === "true")? true:false;
-        let taskName = $(el).attr("data-taskName");
+        let child = $(el).children(".wit-assignable").first();
+
+        let taskId = $(child).attr("data-taskId");
+        let hasReview = ($(child).attr("data-hasReview").toLowerCase() === "true") ? true:false;
+        let taskName = $(child).attr("data-taskName");
 
         console.log(`The task ${taskName} which ${hasReview? "has review":"does not have review"} was moved to ${destination.attr("id")}`);
 
@@ -191,6 +196,61 @@ export class App{
             }
         }
     }
+
+    public saveTasks(){
+        var assigned = $("#assignedTasks");
+        var assignable = assigned.find(".wit-assignable");
+
+        
+        if($("#workItemSelector").val() === "" || assignable.length < 1){
+            console.log("form is invalid")
+            var eom = document.createElement("div");
+            $(eom).addClass("alert alert-danger");
+            $(eom).attr("role", "alert");
+            $(eom).fadeOut(10000);
+            $(eom).text("At least one work item must be specified, and at least one task must be assigned in order to continue.")
+            $("#outputMessages").append(eom);  
+        }
+        else{
+            console.log("Assigning Tasks from " + assignable.length + " items.")
+
+            let tasks:Array<string> = new Array<string>();
+            $.each(assignable, (i:any, o:HTMLElement) => {
+                var t = $(o).attr("data-taskName",);
+                tasks.push(t)
+            });
+
+            // log the tasks to the console.
+            console.log("Tasks: " + JSON.stringify(tasks));
+
+            // all "workitems" shoudl get each of the tasks
+            let targets = $(".workItem")
+
+            $.each(targets, (i, o) => {
+                var wid = parseInt($(o).attr("data-workItemId"));
+                console.log("Adding tasks to work item " + wid.toString());
+
+                // now use the service to add the task to the work item.
+                $.each(assignable, (i:number, o:HTMLElement) => {               
+                    this.teamservice.addTaskToWorkItem(wid,tasks,(m) => {
+                        // Reflect the changes in the ui messages the remove them.
+                        console.log(m);
+                        var x : HTMLDivElement = document.createElement("div");
+                        $(x).addClass("alert alert-info");
+                        $(x).attr("role", "alert");
+                        $(x).text(m);
+                        $(x).fadeOut(8000);
+                        $("#outputMessages").append(x);     
+                        
+                        // Clear the excess junk.
+                        $("#selectedItems").html("");
+                        $("#workItemSelector").val("");
+                        $("#customTask").val("");
+                    });
+                });
+            });
+        }
+    }
 }
 
 /* Bootstrapp the app*/
@@ -204,29 +264,41 @@ $(document).ready(function(){
         
         // Get the work items from the box.
         let value:string = $("#workItemSelector").val() as string;
-        console.info(`Processing the following work items: ${JSON.stringify(value.split(","))}`);
 
-        a.loadSelectedItems(value.split(","), () => {
-            // roll through the items and list them.
-            console.info(`selected work items: ${JSON.stringify(a.selectedItems)}`)
-            
-            // clear any existing content in the html.
-            $("#selectedItems").html("");
-            $.each(a.selectedItems, function(o, i){
-                $("#selectedItems").append(i.toHtmlString())
+        if(value !== ""){
+            console.info(`Processing the following work items: ${JSON.stringify(value.split(","))}`);
+
+            a.loadSelectedItems(value.split(","), () => {
+                // roll through the items and list them.
+                console.info(`selected work items: ${JSON.stringify(a.selectedItems)}`)
+                
+                // clear any existing content in the html.
+                $("#selectedItems").html("");
+                $.each(a.selectedItems, function(o, i){
+                    $("#selectedItems").append(i.toHtmlString())
+                });
+
             });
-
-        });
+        }
+        else{
+            $("#selectedItems").html("");
+        }
     });
 
     $("#addCustomTask").click((e:any) => {
-        let t = new AssignableTask(this, {
-            name: `${$("#customTask").val()}`,
-            hasReview: false,
-            iconClass: "fa fa-cloud"
-        });
+        let t = new AssignableTask(this, 
+            {
+                name: `${$("#customTask").val()}`,
+                hasReview: false,
+                iconClass: "fa fa-cloud"
+            }
+        );
 
         $("#assignedTasks").append(t.toElement());
+    });
+
+    $("#updateTask").click((e:any) =>{
+        a.saveTasks();
     });
 
     $(".drop-target")
